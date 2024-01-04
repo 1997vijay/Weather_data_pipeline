@@ -1,0 +1,70 @@
+2024-01-03 12:46:49,981 - INFO - Pipeline started.
+2024-01-03 12:46:49,981 - INFO - extract_data function started.
+2024-01-03 12:46:49,982 - INFO - download_station_file started.
+2024-01-03 12:46:49,982 - INFO - File url --> https://www1.ncdc.noaa.gov/pub/data/noaa/isd-history.csv
+2024-01-03 12:47:03,230 - INFO - download_station_file started.
+2024-01-03 12:47:03,230 - INFO - File url --> https://www1.ncdc.noaa.gov/pub/data/noaa/country-list.txt
+2024-01-03 12:47:04,494 - INFO - download_files started
+2024-01-03 12:47:04,494 - INFO - File url --> https://www1.ncdc.noaa.gov/pub/data/gsod/
+2024-01-03 12:47:04,494 - INFO - download_files afte url started
+2024-01-03 12:47:08,667 - INFO - downloading file for year 2023
+2024-01-03 12:47:16,675 - INFO - Downloading 50 files.
+2024-01-03 12:47:17,936 - INFO - Saving to local storage.
+2024-01-03 12:47:19,196 - INFO - Saving to local storage.
+2024-01-03 12:47:20,472 - INFO - Saving to local storage.
+2024-01-03 12:47:21,681 - INFO - Saving to local storage.
+2024-01-03 12:47:22,953 - INFO - Saving to local storage.
+2024-01-03 12:47:24,235 - INFO - Saving to local storage.
+2024-01-03 12:47:25,503 - INFO - Saving to local storage.
+2024-01-03 12:47:26,776 - INFO - Saving to local storage.
+2024-01-03 12:47:28,039 - INFO - Saving to local storage.
+2024-01-03 12:47:29,282 - INFO - Saving to local storage.
+2024-01-03 12:47:30,557 - INFO - Saving to local storage.
+2024-01-03 12:47:31,794 - INFO - Saving to local storage.
+2024-01-03 12:47:33,159 - INFO - Saving to local storage.
+2024-01-03 12:47:34,423 - INFO - Saving to local storage.
+2024-01-03 12:47:35,705 - INFO - Saving to local storage.
+2024-01-03 12:47:36,969 - INFO - Saving to local storage.
+2024-01-03 12:47:38,266 - INFO - Saving to local storage.
+2024-01-03 12:47:39,523 - INFO - Saving to local storage.
+2024-01-03 12:47:40,781 - INFO - Saving to local storage.
+2024-01-03 12:47:42,021 - INFO - Saving to local storage.
+2024-01-03 12:47:43,316 - INFO - Saving to local storage.
+2024-01-03 12:47:44,542 - INFO - Saving to local storage.
+2024-01-03 12:47:45,789 - INFO - Saving to local storage.
+2024-01-03 12:47:47,041 - INFO - Saving to local storage.
+2024-01-03 12:47:48,298 - INFO - Saving to local storage.
+2024-01-03 12:47:49,589 - INFO - Saving to local storage.
+2024-01-03 12:47:50,837 - INFO - Saving to local storage.
+2024-01-03 12:47:52,073 - INFO - Saving to local storage.
+2024-01-03 12:47:53,360 - INFO - Saving to local storage.
+2024-01-03 12:47:54,639 - INFO - Saving to local storage.
+2024-01-03 12:47:55,927 - INFO - Saving to local storage.
+2024-01-03 12:47:57,196 - INFO - Saving to local storage.
+2024-01-03 12:47:58,423 - INFO - Saving to local storage.
+2024-01-03 12:47:59,669 - INFO - Saving to local storage.
+2024-01-03 12:48:00,917 - INFO - Saving to local storage.
+2024-01-03 12:48:02,200 - INFO - Saving to local storage.
+2024-01-03 12:48:03,462 - INFO - Saving to local storage.
+2024-01-03 12:48:04,754 - INFO - Saving to local storage.
+2024-01-03 12:48:06,000 - INFO - Saving to local storage.
+2024-01-03 12:48:07,294 - INFO - Saving to local storage.
+2024-01-03 12:48:08,583 - INFO - Saving to local storage.
+2024-01-03 12:48:09,814 - INFO - Saving to local storage.
+2024-01-03 12:48:11,112 - INFO - Saving to local storage.
+2024-01-03 12:48:12,366 - INFO - Saving to local storage.
+2024-01-03 12:48:13,637 - INFO - Saving to local storage.
+2024-01-03 12:48:14,896 - INFO - Saving to local storage.
+2024-01-03 12:48:16,158 - INFO - Saving to local storage.
+2024-01-03 12:48:17,390 - INFO - Saving to local storage.
+2024-01-03 12:48:18,625 - INFO - Saving to local storage.
+2024-01-03 12:48:19,873 - INFO - Saving to local storage.
+2024-01-03 12:48:19,873 - INFO - extract_data pipeline finshed.
+2024-01-03 12:48:19,873 - INFO - Data quality check started.
+2024-01-03 12:49:16,314 - INFO - add_features started.
+2024-01-03 12:49:16,970 - INFO - add_visibilityCategory started.
+2024-01-03 12:49:17,017 - INFO - add_weatherType started.
+2024-01-03 12:49:20,928 - INFO - Merging satrted.
+2024-01-03 12:49:20,947 - INFO - Merging satrted.
+2024-01-03 12:50:00,186 - INFO - File C:\Users\sg1386-dsk01-user1\Desktop\Clean Coding\Final_Project_Vijay_Kumar\Weather_Data_Pipeline\data/processed/WEATHER_PROCESSED.csv saved successfully.
+2024-01-03 12:50:00,186 - INFO - Pipeline ran successfully.
