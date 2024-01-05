@@ -2,6 +2,7 @@
 # GSOD Weather Data Pipeline
 
 The project revolves around the efficient processing of weather data obtained from GSOD (Global Summary of the Day). It encompasses tasks such as historical data loading and incremental data updates. The implementation leverages various Python libraries for interacting with the HTTP URL 'https://www1.ncdc.noaa.gov/pub/data/gsod/', extracting files and folders from the provided URL and processing the files to prepare final ready to use dataset. The project aims to streamline the retrieval and processing of weather-related information through these essential Python tools.
+
 The primary objective of this project was to adhere to clean coding principles and best practices throughout the development process. Emphasizing clarity, maintainability, and readability, the project focused on employing industry-standard coding conventions to enhance the overall quality of the codebase. By incorporating clean coding principles, the project aims to facilitate ease of understanding, collaboration, and future modifications, ensuring a robust and efficient software solution.
 
 
