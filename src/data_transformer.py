@@ -13,13 +13,13 @@ Usage:
 
     Author Information:
     Name: Vijay Kumar
-    Date: 25 Dec 2023
+    Date: 30 Dec 2023
 
 Abstract/Description:
 This script ad  new feature columns like Day, IsWeekend, TempChange, WindCategory and Season.
 
 Change Log:
-    - 25 Dec 2023: Initial creation.
+    - 30 Dec 2023: Initial creation.
 """
 
 #import required libraries

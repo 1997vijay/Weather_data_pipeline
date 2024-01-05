@@ -13,13 +13,13 @@ Usage:
 
     Author Information:
     Name: Vijay Kumar
-    Date: 21 Dec 2023
+    Date: 23 Dec 2023
 
 Abstract/Description:
 This script downloads files from a specified URL, extracts their contents, and saves them in the 'raw' folder.
 
 Change Log:
-    - 21 Dec 2023: Initial creation.
+    - 23 Dec 2023: Initial creation.
 """
 
 # import all required libraries
@@ -58,7 +58,7 @@ def save_file(fileResponse,fileName,outputPath,blobName,client=None):
             Exception: If there is an error while saving the file, an exception is raised and logged.
         """
     try:
-        # Convert DataFrame to CSV in-memory
+        # Convert DataFrame to CSV in-memory otherwise try to replce the file extension and store it in memory
         try:
             file_content = BytesIO()
             fileResponse.to_csv(file_content, index=False)
@@ -92,7 +92,7 @@ def download_other_file(url,path,fileName):
     Raises:
     - Exception: If an error occurs during the download or file saving process.
     """
-    logging.info('download_station_file started.')
+    logging.info('download_other_file started.')
     try:
         logging.info(f'File url --> {url}')
         output_path = os.path.join(path,fileName)
@@ -116,8 +116,7 @@ def get_listOfYears(response, currentTimestamp,isIncrementalLoad):
 
     Args:
         response (Response): The response object containing HTML content.
-        isIncrementalLoad (bool, optional): If True, compares the extracted timestamp
-            with the current timestamp. If False, only extracts and returns the years.
+        isIncrementalLoad (bool, optional): If True, only modified files will be downloaded if False all files will be downloaded.
 
     Returns:
         list : Returns a list of years.
@@ -126,6 +125,7 @@ def get_listOfYears(response, currentTimestamp,isIncrementalLoad):
         Exception: If there is an error during the extraction or comparison process,
                    an exception is raised and logged.
     """
+    logging.info('get_listOfYears started.')
     html_content = response.text
     soup = BeautifulSoup(html_content, "html.parser")
     listYear=[]
@@ -141,13 +141,14 @@ def get_listOfYears(response, currentTimestamp,isIncrementalLoad):
             if isIncrementalLoad:
               if timestamp_dt >= currentTimestamp:
                 if year.isnumeric():
-                  print(f"The provided timestamp is in the future: {fileTime.get_text().strip()}-->{year}")
+                  print(f"Modified Directory: {fileTime.get_text().strip()}-->{year}")
                   listYear.append(year)
             else:
               if year.isnumeric():
                 listYear.append(year)
         return listYear
     except Exception as e:
+        logging.error(f'Error in get_listOfYears. {e}')
         raise e
 
 def download_files(url,connectionString,cloudName,fileOutputPath,saveToCloud,fileName,isIncrementalLoad,sampleFile,blobName):
@@ -253,7 +254,7 @@ def extract_data(url,connectionString,cloudName,fileOutputPath,saveToCloud,fileN
         # download country name file
         download_other_file(config.COUNTRY_URL,config.COUNTRY_FILE_OUTPUT_PATH,config.COUNTRY_FILE_NAME)
 
-        # download the weather data
+        # download the weather data and return the list of years
         listOfYears=download_files(url,connectionString,cloudName,fileOutputPath,saveToCloud,fileName,isIncrementalLoad,sampleFile,blobName)
 
         logging.info('extract_data pipeline finshed.')

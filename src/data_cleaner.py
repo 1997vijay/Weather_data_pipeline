@@ -63,19 +63,7 @@ def read_data(filePath,header=0):
         raise FileNotFoundError(f'File not found.{e}')
 
 def read_data_files(filePath, extension):
-    """
-    Reads data from file(s) in the specified directory.
-
-    Args:
-        filePath (List): The path to the directory containing the file(s) or the path to a specific file.
-        extension (str): The file extension to filter files.
-
-    Returns:
-        pd.DataFrame: A pandas DataFrame containing the concatenated data.
-
-    Raises:
-        Exception: If there is an error during the reading process, an exception is raised.
-        
+    """  
     This function reads data from file(s) in the specified directory or from a specific file. 
     It supports filtering files based on the provided file extension. The data from each file 
     is read using the `read_data` function and appended to a list. The final result is a pandas 
@@ -91,11 +79,14 @@ def read_data_files(filePath, extension):
     Raises:
         Exception: If there is an error during the reading process, an exception is raised.
     """
+    logging.info('read_data_files started.')
     try:
         data = []
         
         if not isinstance(filePath, list) or not filePath or len(filePath)==0:
+            logging.error('Invalid file path. Please provide a non-empty list of file paths.')
             raise ValueError('Invalid file path. Please provide a non-empty list of file paths.')
+        
         for path in filePath:
             if os.path.isdir(path):
                 # Read all files with the given extension from the specified directory and its subdirectories
@@ -113,6 +104,7 @@ def read_data_files(filePath, extension):
         return df
 
     except Exception as e:
+        logging.error(f'Error while reading the file data.{e}')
         raise e
     
 
@@ -154,13 +146,11 @@ def clean_data(filePath,extension):
     Function will read all the weather files from given directory, it will also read station details and country details as well.
     Then it will perform data cleaning operation on the dataframe.
     Args:
-        file_path (str): The path to the directory or file.
+        file_path (List): List of path to the directory or file.
         extension (str): The file extension to filter files.
-        all_files (bool): If True, read and check all files in the directory; if False, read and check only a single file.
 
     Returns:
-        pd.DataFrame or list: If all_files is True, a list of cleaned DataFrames from all files;
-                              if all_files is False, a single cleaned DataFrame from the specified file.
+        pd.DataFrame or list: Pandas dataframe for further processing.
 
     Raises:
         ValueError: If the specified file path is not valid or no files found with the given extension.

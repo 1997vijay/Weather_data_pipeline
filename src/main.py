@@ -1,3 +1,25 @@
+"""
+Main file to process the GSOD weather data.
+
+Dependencies:
+    - pandas: A Python library for analyzing the data.
+    - os: An operating system library for interacting with the system.
+    - logging: A library for logging information.
+
+Usage:
+    1. Ensure that you have the required dependencies installed.
+    3. Run the code to download, extract, and process the files.
+
+    Author Information:
+    Name: Vijay Kumar
+    Date: 4th Jan 2024
+
+Abstract/Description:
+The primary script perform the following tasks: downloading GSOD files, saving them to local/cloud storage, conducting data cleaning, performing data transformation, 
+and ultimately creating and saving a processed dataframe in a CSV file. This processed dataframe serves as a valuable resource for data scientists engaged in exploratory data analysis (EDA)
+Change Log:
+    - 4th Jan 2024: Initial creation.
+"""
 
 # import all required libraries
 import logging
@@ -55,6 +77,7 @@ def run_pipeline():
         sampleFile=config.SAMPLE_FILE
         rawBlobName=config.BLOB_NAME
         listOfYears=extract_data(url,connectionString,cloudName,fileOutputPath,saveToCloud,fileName,isIncrementalLoad,sampleFile,rawBlobName)
+        logging.info('extract_data finished.')
 
         # # process the data
         extension=config.EXTENSION
@@ -67,9 +90,11 @@ def run_pipeline():
 
         else:
              weatherDf,stationDf,countryDf= clean_data([fileOutputPath],extension)
+        logging.info('clean_data finished.')
 
         # # transform the data
         processed_df=add_features(weatherDataframe=weatherDf,stationDataframe=stationDf,countryDataframe=countryDf,dateColumn=dateColumn)
+        logging.info('feature addition finished.')
 
         # # save processed data
         fileName=config.DATAFRAME_OUTPUT_FILE_NAME
@@ -78,7 +103,10 @@ def run_pipeline():
 
         if isIncrementalLoad:
             # For incremental load, read the processed file which already have historical data
+            logging.info('Reading the already processed data.')
             historical_df=read_data(filePath=filePath+'/'+fileName)
+
+            # removing data for the given listOfYears as data for these year will be concatenated with already processed data 
             historical_df=historical_df[~historical_df['Year'].isin(listOfYears)]
             print(historical_df[historical_df['Year'].isin(listOfYears)].head())
 
@@ -94,7 +122,6 @@ def run_pipeline():
                 logging.info('Pipeline ran successfully.')
     except Exception as e:
         logging.error(f'Error in pipeline.{e}')
-
 if __name__=='__main__':
     try:
         run_pipeline()

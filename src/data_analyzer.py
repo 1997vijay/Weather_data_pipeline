@@ -5,6 +5,7 @@ Dependencies:
     - pandas: A Python library for data analysis.
     - matplotlib: A python library for visualization.
     - seaborn: A library built on top of matplotlib that provide more advance visualization.
+    - plotly: A python library for ploting the intreactive and advance graph.
 
 Usage:
     1. Ensure that you have the required dependencies installed.
