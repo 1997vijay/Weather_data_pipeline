@@ -5,9 +5,10 @@ import pandas as pd
 import config
 import os
 
-from data_loader import extract_data
-from data_cleaner import clean_data
+from data_loader import extract_data,save_file
+from data_cleaner import clean_data,read_data
 from data_transformer import add_features,save_dataframe
+from cloudStorageSaver import CloudStorageSaver
 
 # Configure the default behaviour logging system
 # logging.INFO--> log info or higher log like error or critical
@@ -37,6 +38,12 @@ def run_pipeline():
     """
     logging.info('Pipeline started.')
     try:
+        isIncrementalLoad=config.INCREMENTAL_LOAD
+        if isIncrementalLoad:
+            logging.info('Load Type: Incremental Load.')
+        else:
+            logging.info('Load Type: Historical Load.')
+
         # extract the data from url
         # set up the variables
         url=config.BASE_URL
@@ -45,15 +52,21 @@ def run_pipeline():
         fileOutputPath=config.FILE_OUTPUT_PATH
         saveToCloud=config.SAVE_TO_CLOUD
         fileName=config.FILE_NAME
-        isComparison=config.COMPARISON
         sampleFile=config.SAMPLE_FILE
-        extract_data(url,connectionString,cloudName,fileOutputPath,saveToCloud,fileName,isComparison,sampleFile)
+        rawBlobName=config.BLOB_NAME
+        listOfYears=extract_data(url,connectionString,cloudName,fileOutputPath,saveToCloud,fileName,isIncrementalLoad,sampleFile,rawBlobName)
 
         # # process the data
         extension=config.EXTENSION
         dateColumn=config.DATE_COLUMN
         keyColumns=config.KEY_COLUMNS
-        weatherDf,stationDf,countryDf= clean_data(fileOutputPath,extension)
+        if isIncrementalLoad:
+            listOfFilePath=[fileOutputPath+f'/{year}' for year in listOfYears]
+            logging.info(listOfFilePath)
+            weatherDf,stationDf,countryDf= clean_data(listOfFilePath,extension)
+
+        else:
+             weatherDf,stationDf,countryDf= clean_data([fileOutputPath],extension)
 
         # # transform the data
         processed_df=add_features(weatherDataframe=weatherDf,stationDataframe=stationDf,countryDataframe=countryDf,dateColumn=dateColumn)
@@ -61,9 +74,24 @@ def run_pipeline():
         # # save processed data
         fileName=config.DATAFRAME_OUTPUT_FILE_NAME
         filePath=config.DATAFRAME_OUTPUT_PATH
-        result=save_dataframe(dataframe=processed_df,fileName=fileName,filePath=filePath)
-        if result:
-            logging.info('Pipeline ran successfully.')
+        blobName=config.PROCESSED_BLOB_NAME
+
+        if isIncrementalLoad:
+            # For incremental load, read the processed file which already have historical data
+            historical_df=read_data(filePath=filePath+'/'+fileName)
+            historical_df=historical_df[~historical_df['Year'].isin(listOfYears)]
+            print(historical_df[historical_df['Year'].isin(listOfYears)].head())
+
+            # concate the processed_df and historical_df
+            processed_df=pd.concat([historical_df,processed_df],ignore_index=True)
+        print(processed_df.head())
+        if saveToCloud:
+            client=CloudStorageSaver(cloudName=cloudName,connection_string=connectionString)
+            save_file(fileResponse=processed_df,fileName=fileName,outputPath=filePath,blobName=blobName,client=client)
+        else:
+            result=save_dataframe(dataframe=processed_df,fileName=fileName,filePath=filePath)
+            if result:
+                logging.info('Pipeline ran successfully.')
     except Exception as e:
         logging.error(f'Error in pipeline.{e}')
 

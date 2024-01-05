@@ -387,7 +387,7 @@ def add_features(weatherDataframe,stationDataframe,countryDataframe,dateColumn):
 
             # add weather categories
             df=add_weatherType(df)
-            print(df.head())
+ 
             # merge station and country dataframe
             merged_df=merge_dataframe(leftDataframe=stationDataframe,rightDataframe=countryDataframe,rightOnKey='FIPS',leftOnKey='CTRY',joinType='left')
         

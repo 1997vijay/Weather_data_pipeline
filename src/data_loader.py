@@ -38,14 +38,14 @@ import gzip
 import shutil
 
 #set the yesterday timestamp for file timestamp comparison
-currentTimestamp=datetime.now()-timedelta(days=1)
+currentTimestamp=datetime.now()-timedelta(days=2)
 
 logFileName='data_pipeline.log'
 logFolder='log'
 logFilePath=os.path.join(os.getcwd(),logFolder,logFileName)
 logging.basicConfig(level=logging.INFO,format='%(asctime)s - %(levelname)s - %(message)s',filename=logFilePath,filemode='w')
 
-def save_file(fileResponse,fileName,outputPath,client=None):
+def save_file(fileResponse,fileName,outputPath,blobName,client=None):
     """
         Save the contents of a file received in a response to a specified output path.
         Args:
@@ -58,17 +58,20 @@ def save_file(fileResponse,fileName,outputPath,client=None):
             Exception: If there is an error while saving the file, an exception is raised and logged.
         """
     try:
-        # Combine the output folder and file name
-        fileName=fileName.replace("op.gz","op")
-        output_path = os.path.join(outputPath,fileName.split("/")[-1])
-
-        # Create an in-memory file-like object
-        file_content = BytesIO(fileResponse.content)
+        # Convert DataFrame to CSV in-memory
+        try:
+            file_content = BytesIO()
+            fileResponse.to_csv(file_content, index=False)
+            file_content.seek(0)
+        except:
+            fileName=fileName.replace("op.gz","op")
+            output_path = os.path.join(outputPath,fileName.split("/")[-1])
+            file_content = BytesIO(fileResponse)
 
         # Extract and Save the content to the output path
         if config.SAVE_TO_CLOUD:
                 logging.info(f'Saving to {config.CLOUD_NAME} storage.')
-                client.upload_file(containerName=config.CONTAINER_NAME,blobName=config.BLOB_NAME,data=file_content.read(),fileName=fileName)
+                client.upload_file(containerName=config.CONTAINER_NAME,blobName=blobName,data=file_content,fileName=fileName)
         else:
             logging.info('Saving to local storage.')
             # Extract and Save the content to the output path
@@ -103,7 +106,7 @@ def download_other_file(url,path,fileName):
         raise e
 
    
-def get_listOfYears(response, currentTimestamp,isComparison):
+def get_listOfYears(response, currentTimestamp,isIncrementalLoad):
     """
     Extracts and compares file timestamps from the HTML content of a response.
     The function uses BeautifulSoup to parse the HTML content and selects
@@ -113,13 +116,11 @@ def get_listOfYears(response, currentTimestamp,isComparison):
 
     Args:
         response (Response): The response object containing HTML content.
-        currentTimestamp (datetime): The current timestamp for comparison.
-        compareTimestamp (bool, optional): If True, compares the extracted timestamp
+        isIncrementalLoad (bool, optional): If True, compares the extracted timestamp
             with the current timestamp. If False, only extracts and returns the years.
-            Defaults to True.
 
     Returns:
-        list : Returns a list of years for timestamps in the future.
+        list : Returns a list of years.
 
     Raises:
         Exception: If there is an error during the extraction or comparison process,
@@ -137,7 +138,7 @@ def get_listOfYears(response, currentTimestamp,isComparison):
             timestamp_dt = datetime.strptime(fileTime.get_text().strip(), '%Y-%m-%d %H:%M')
             year=year.get_text().split("/")[0]
             
-            if isComparison:
+            if isIncrementalLoad:
               if timestamp_dt >= currentTimestamp:
                 if year.isnumeric():
                   print(f"The provided timestamp is in the future: {fileTime.get_text().strip()}-->{year}")
@@ -149,7 +150,7 @@ def get_listOfYears(response, currentTimestamp,isComparison):
     except Exception as e:
         raise e
 
-def download_files(url,connectionString,cloudName,fileOutputPath,saveToCloud,fileName,isComparison,sampleFile):
+def download_files(url,connectionString,cloudName,fileOutputPath,saveToCloud,fileName,isIncrementalLoad,sampleFile,blobName):
     """
     Download files from a specified URL and save them to the output path.
     
@@ -162,10 +163,11 @@ def download_files(url,connectionString,cloudName,fileOutputPath,saveToCloud,fil
         connectionString (str): Connection string required for cloud storage, if saveToCloud is True.
         cloudName (str): Name of the cloud storage service.
         fileOutputPath (str): The local path where the files will be saved.
-        isComparison (bool): A flag indicating whether the download by comparing the timestamp of files.
+        isIncrementalLoad (bool): A flag indicating whether to download the historic files.
         sampleFile (int): The number of sample files to download.
         saveToCloud (bool, optional): If True, files will be saved to cloud storage; if False, files will be saved locally. Defaults to False.
         fileName (str, optional): The name of the specific file to download. If None, download all files. Defaults to None.
+        blobName : Azure blob name
     
     Returns:
         None: The function downloads and saves the file(s) to the specified output path.
@@ -175,13 +177,12 @@ def download_files(url,connectionString,cloudName,fileOutputPath,saveToCloud,fil
     """
     logging.info('download_files started')
     try:
+        listOfYears=[]
         if fileName!=None:
             fullUrl=url+'/'+fileName
         else:
             fullUrl=url
         logging.info(f'File url --> {fullUrl}')
-
-        logging.info('download_files afte url started')
 
         # if saveToCloud True --> create cloud storage instance
         if saveToCloud:
@@ -193,14 +194,14 @@ def download_files(url,connectionString,cloudName,fileOutputPath,saveToCloud,fil
         response = requests.get(fullUrl)
         if response.status_code == 200:
             if fileName is None:
-                listOfYears=get_listOfYears(response,currentTimestamp,isComparison)
+                listOfYears=get_listOfYears(response,currentTimestamp,isIncrementalLoad)
                 for year in listOfYears:
                     logging.info(f'downloading file for year {year}')
 
                     fullUrl=url+f'{year}'
                     new_fileOutputPath=fileOutputPath
 
-                    # check if dir is present. if not create a directory with the giev year
+                    # check if dir is present. if not create a directory with the given year
                     new_fileOutputPath=new_fileOutputPath+f'/{year}'
                     if not os.path.exists(new_fileOutputPath):
                         os.makedirs(new_fileOutputPath)
@@ -220,7 +221,7 @@ def download_files(url,connectionString,cloudName,fileOutputPath,saveToCloud,fil
                         # if saveToCloud True then save file data to cloud storage else save in local
                         response = requests.get(link)
                         if response.status_code==200:
-                            save_file(fileResponse=response,fileName=year+'/'+fileName,outputPath=new_fileOutputPath,client=client)
+                            save_file(fileResponse=response.content,fileName=year+'/'+fileName,outputPath=new_fileOutputPath,blobName=blobName,client=client)
                         else:
                             logging.error('Error while downlaod file.')
             else:
@@ -229,11 +230,12 @@ def download_files(url,connectionString,cloudName,fileOutputPath,saveToCloud,fil
                 logging.info(f'File name -->{fileName}')
                 save_file(fileResponse=response,fileName=fileName,outputPath=fileOutputPath,client=client)
                 logging.info('File downloaded successfully.')
+        return listOfYears
     except Exception as e:
         logging.error(f'Error while downloading the file.{e}')
         raise e
 
-def extract_data(url,connectionString,cloudName,fileOutputPath,saveToCloud,fileName,isComparison,sampleFile):
+def extract_data(url,connectionString,cloudName,fileOutputPath,saveToCloud,fileName,isIncrementalLoad,sampleFile,blobName):
     """
     Main function to run the data pipeline.
     Args:
@@ -252,9 +254,10 @@ def extract_data(url,connectionString,cloudName,fileOutputPath,saveToCloud,fileN
         download_other_file(config.COUNTRY_URL,config.COUNTRY_FILE_OUTPUT_PATH,config.COUNTRY_FILE_NAME)
 
         # download the weather data
-        download_files(url,connectionString,cloudName,fileOutputPath,saveToCloud,fileName,isComparison,sampleFile)
+        listOfYears=download_files(url,connectionString,cloudName,fileOutputPath,saveToCloud,fileName,isIncrementalLoad,sampleFile,blobName)
 
         logging.info('extract_data pipeline finshed.')
+        return listOfYears
     except Exception as e:
         logging.error(f'Error in extract_data.{e}')
 
@@ -268,9 +271,10 @@ if __name__ == '__main__':
     fileOutputPath=config.FILE_OUTPUT_PATH
     saveToCloud=config.SAVE_TO_CLOUD
     fileName=config.FILE_NAME
-    isComparison=config.COMPARISON
+    isIncrementalLoad=config.INCREMENTAL_LOAD
     sampleFile=config.SAMPLE_FILE
+    blobName=config.BLOB_NAME
     try:
-        extract_data(url,connectionString,cloudName,fileOutputPath,saveToCloud,fileName,isComparison,sampleFile)
+        listOfYears=extract_data(url,connectionString,cloudName,fileOutputPath,saveToCloud,fileName,isIncrementalLoad,sampleFile,blobName)
     except Exception as e:
         raise e

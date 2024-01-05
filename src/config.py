@@ -2,9 +2,9 @@ import os
 
 #-----------data_loader settins start-----------#
 
-# change Comparison flag to True for historical load
-# You can change the sampel file count
-COMPARISON=True
+# change HISTORICAL_LOAD flag to True for historical load
+# If you want to download the limited file then set the SAMPLE_FILE , Else set to None if you want to download all files
+INCREMENTAL_LOAD=False
 SAMPLE_FILE=100
 
 # base url for the wheather data
@@ -28,6 +28,7 @@ SAVE_TO_CLOUD=False
 CLOUD_NAME='Azure'
 CONTAINER_NAME='raw'
 BLOB_NAME='data'
+PROCESSED_BLOB_NAME='processed'
 CONNECTION_STRING='DefaultEndpointsProtocol=https;AccountName=adfstorage1140;AccountKey=546RzkYi4oCkyT6TtZzbtieke5ksF12cMMCYlMcufpducNYja69BI9z19zDzDaVG+xbA6InpCbjE+AStXbdNqA==;EndpointSuffix=core.windows.net'
 
 
@@ -40,7 +41,7 @@ KEY_COLUMNS=['STATION']
 
 
 # data_transformer settings
-SELECTED_COLUMNS=['DATE','STN','STATION NAME','COUNTRY NAME','LAT', 
+SELECTED_COLUMNS=['DATE','Year','STN','STATION NAME','COUNTRY NAME','LAT', 
                   'LON','TEMP', 'DEWP', 'SLP', 'STP', 'VISIB',
                   'WDSP', 'MXSPD', 'GUST', 'MAX', 'MIN', 'PRCP', 'SNDP', 'FRSHTT',
                   'Day', 'IsWeekend','Hemisphere', 'Season', 'TempChange','WindCategory',

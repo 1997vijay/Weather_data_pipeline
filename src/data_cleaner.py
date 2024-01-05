@@ -65,13 +65,24 @@ def read_data(filePath,header=0):
 def read_data_files(filePath, extension):
     """
     Reads data from file(s) in the specified directory.
-    This function checks whether the provided 'filePath' is a directory or a file.
-    If 'filePath' is a directory, it reads all files with the given 'extension' from
-    the specified directory and its subdirectories. If 'filePath' is a file, it reads
-    only that file.
 
     Args:
-        filePath (str): The path to the directory containing the file(s) or the path to a specific file.
+        filePath (List): The path to the directory containing the file(s) or the path to a specific file.
+        extension (str): The file extension to filter files.
+
+    Returns:
+        pd.DataFrame: A pandas DataFrame containing the concatenated data.
+
+    Raises:
+        Exception: If there is an error during the reading process, an exception is raised.
+        
+    This function reads data from file(s) in the specified directory or from a specific file. 
+    It supports filtering files based on the provided file extension. The data from each file 
+    is read using the `read_data` function and appended to a list. The final result is a pandas 
+    DataFrame obtained by concatenating the data from all the files.
+
+    Args:
+        filePath (List): List containing the path to the directory or file.
         extension (str): The file extension to filter files.
 
     Returns:
@@ -82,20 +93,22 @@ def read_data_files(filePath, extension):
     """
     try:
         data = []
-
-        if os.path.isdir(filePath):
-            # Read all files with the given extension from the specified directory and its subdirectories
-            for root, dirs, files in os.walk(filePath):
-                for file in files:
-                    if file.endswith(f".{extension}"):
-                        filename = os.path.join(root, file)
-                        df = read_data(filename)
-                        data.append(df)
-        else:
-            # Read a single file
-            df = read_data(filePath)
-            data.append(df)
-
+        
+        if not isinstance(filePath, list) or not filePath or len(filePath)==0:
+            raise ValueError('Invalid file path. Please provide a non-empty list of file paths.')
+        for path in filePath:
+            if os.path.isdir(path):
+                # Read all files with the given extension from the specified directory and its subdirectories
+                for root, dirs, files in os.walk(path):
+                    for file in files:
+                        if file.endswith(f".{extension}"):
+                            fileName = os.path.join(root, file)
+                            df = read_data(fileName)
+                            data.append(df)
+            else:
+                # Read a single file
+                df = read_data(filePath)
+                data.append(df)
         df = pd.concat(data, axis=0, ignore_index=True)
         return df
 
@@ -168,6 +181,7 @@ def clean_data(filePath,extension):
 
         # Convert string format to date format
         dataframe['DATE']=pd.to_datetime(dataframe['YEARMODA'], format='%Y%m%d')
+        dataframe['Year']=dataframe['DATE'].dt.year
         
 
         # Columns to float type after removing '*'
