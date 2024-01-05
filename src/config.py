@@ -2,9 +2,11 @@ import os
 
 #-----------data_loader settins start-----------#
 
-# change HISTORICAL_LOAD flag to True for historical load
-# If you want to download the limited file then set the SAMPLE_FILE , Else set to None if you want to download all files
-INCREMENTAL_LOAD=False
+
+# Set this to False for full load. True for incremental load
+INCREMENTAL_LOAD=True
+
+# Define the number of files to download (e.g., SAMPLE_FILE=100). Set it to None to download all files
 SAMPLE_FILE=100
 
 # base url for the wheather data
@@ -23,13 +25,17 @@ COUNTRY_FILE_NAME='country.txt'
 COUNTRY_URL='https://www1.ncdc.noaa.gov/pub/data/noaa/country-list.txt'
 COUNTRY_FILE_OUTPUT_PATH=os.path.join(os.getcwd(), "data/resources")
 
-# cloud settings
+# Set to True if you want to save files to cloud storage
 SAVE_TO_CLOUD=False
+
+# Specify the cloud platform to use (e.g., 'Azure', 'AWS', 'GCP')
 CLOUD_NAME='Azure'
+
+# Configuration for Azure cloud storage
 CONTAINER_NAME='raw'
 BLOB_NAME='data'
 PROCESSED_BLOB_NAME='processed'
-CONNECTION_STRING='DefaultEndpointsProtocol=https;AccountName=adfstorage1140;AccountKey=546RzkYi4oCkyT6TtZzbtieke5ksF12cMMCYlMcufpducNYja69BI9z19zDzDaVG+xbA6InpCbjE+AStXbdNqA==;EndpointSuffix=core.windows.net'
+CONNECTION_STRING=None
 
 
 #-----------data_loader settins end-----------#
@@ -40,7 +46,7 @@ DATE_COLUMN='DATE'
 KEY_COLUMNS=['STATION']
 
 
-# data_transformer settings
+#--------------data_transformer settings-----------------
 SELECTED_COLUMNS=['DATE','Year','STN','STATION NAME','COUNTRY NAME','LAT', 
                   'LON','TEMP', 'DEWP', 'SLP', 'STP', 'VISIB',
                   'WDSP', 'MXSPD', 'GUST', 'MAX', 'MIN', 'PRCP', 'SNDP', 'FRSHTT',
@@ -51,5 +57,5 @@ DATAFRAME_OUTPUT_PATH = os.path.join(os.getcwd(), "data/processed")
 DATAFRAME_OUTPUT_FILE_NAME='WEATHER_PROCESSED.csv'
 TO_TABLE=False
 
-# data_analyzer settings
+#-------------data_analyzer settings----------------
 AGGREGATED_FILE_PATH=os.path.join(os.getcwd(), "data/aggregated")

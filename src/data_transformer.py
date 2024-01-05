@@ -16,7 +16,7 @@ Usage:
     Date: 25 Dec 2023
 
 Abstract/Description:
-This script new feature columns like Day, IsWeekend, TempChange, WindCategory and Season.
+This script ad  new feature columns like Day, IsWeekend, TempChange, WindCategory and Season.
 
 Change Log:
     - 25 Dec 2023: Initial creation.
