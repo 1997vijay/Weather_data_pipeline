@@ -30,6 +30,7 @@ import config
 
 import plotly.express as px
 import plotly.graph_objects as go
+import pandas as pd
 
 import warnings
 warnings.filterwarnings('ignore')
@@ -51,7 +52,7 @@ except FileNotFoundError as e:
 weather_df['VisibilityCategory']=weather_df['VisibilityCategory'].astype(str)
 weather_df['WindCategory']=weather_df['WindCategory'].astype(str)
 weather_df['TEMP']=round(weather_df['TEMP'],2)
-weather_df['Year']=pd.to_datetime(weather_df['DATE']).dt.year
+weather_df['DATE']=pd.to_datetime(weather_df['DATE'],format='ISO8601')
 
 # aggregate the data based on Date
 try:
@@ -165,12 +166,10 @@ except Exception as e:
     raise e
 
 
-# Plot Geo Map
-import plotly.express as px
-import plotly.graph_objects as go
-import pandas as pd
 
+# Plot World Map
 geo_df = weather_df[weather_df['Year']==2023].groupby('STATION NAME').agg({'TEMP':'mean','LAT':'max','LON':'max','COUNTRY NAME':'max'}).reset_index()
+geo_df['TEMP']=round(geo_df['TEMP'],2)
 geo_df['Rank']=geo_df['TEMP'].rank(ascending=False, method='dense')
 geo_df['text'] = geo_df['STATION NAME'] + ' ' + geo_df['COUNTRY NAME'] + '-->' + geo_df['TEMP'].astype(str)
 
@@ -185,8 +184,8 @@ fig = go.Figure(data=go.Scattergeo(
 fig.update_layout(
         geo_scope='world',
         geo = dict(resolution = 110),
-        height=600,  # Set the desired height
-        width=1400,  # Set the desired width
+        height=600,  
+        width=1400,  
     )
 fig.show()
 

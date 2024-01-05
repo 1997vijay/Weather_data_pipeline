@@ -1,10 +1,223 @@
-2024-01-05 16:37:49,190 - INFO - Pipeline started.
-2024-01-05 16:37:49,190 - INFO - Load Type: Historical Load.
-2024-01-05 16:37:49,190 - INFO - Data quality check started.
-2024-01-05 16:39:41,208 - INFO - add_features started.
-2024-01-05 16:39:42,458 - INFO - add_visibilityCategory started.
-2024-01-05 16:39:42,568 - INFO - add_weatherType started.
-2024-01-05 16:39:49,818 - INFO - Merging satrted.
-2024-01-05 16:39:49,959 - INFO - Merging satrted.
-2024-01-05 16:41:11,564 - INFO - File C:\Users\sg1386-dsk01-user1\Desktop\Git Pipeline\Weather_data_pipeline\data/processed/WEATHER_PROCESSED.csv saved successfully.
-2024-01-05 16:41:11,564 - INFO - Pipeline ran successfully.
+2024-01-05 20:29:37,336 - INFO - Pipeline started.
+2024-01-05 20:29:37,337 - INFO - Load Type: Incremental Load.
+2024-01-05 20:29:37,337 - INFO - extract_data function started.
+2024-01-05 20:29:37,337 - INFO - download_station_file started.
+2024-01-05 20:29:37,337 - INFO - File url --> https://www1.ncdc.noaa.gov/pub/data/noaa/isd-history.csv
+2024-01-05 20:29:53,068 - INFO - download_station_file started.
+2024-01-05 20:29:53,068 - INFO - File url --> https://www1.ncdc.noaa.gov/pub/data/noaa/country-list.txt
+2024-01-05 20:29:54,318 - INFO - download_files started
+2024-01-05 20:29:54,318 - INFO - File url --> https://www1.ncdc.noaa.gov/pub/data/gsod/
+2024-01-05 20:29:55,682 - INFO - downloading file for year 2023
+2024-01-05 20:30:02,157 - INFO - Downloading 100 files.
+2024-01-05 20:30:03,407 - INFO - Saving to local storage.
+2024-01-05 20:30:04,781 - INFO - Saving to local storage.
+2024-01-05 20:30:06,001 - INFO - Saving to local storage.
+2024-01-05 20:30:07,282 - INFO - Saving to local storage.
+2024-01-05 20:30:08,532 - INFO - Saving to local storage.
+2024-01-05 20:30:09,829 - INFO - Saving to local storage.
+2024-01-05 20:30:11,094 - INFO - Saving to local storage.
+2024-01-05 20:30:12,407 - INFO - Saving to local storage.
+2024-01-05 20:30:13,688 - INFO - Saving to local storage.
+2024-01-05 20:30:14,907 - INFO - Saving to local storage.
+2024-01-05 20:30:16,162 - INFO - Saving to local storage.
+2024-01-05 20:30:17,443 - INFO - Saving to local storage.
+2024-01-05 20:30:18,709 - INFO - Saving to local storage.
+2024-01-05 20:30:19,974 - INFO - Saving to local storage.
+2024-01-05 20:30:21,258 - INFO - Saving to local storage.
+2024-01-05 20:30:22,523 - INFO - Saving to local storage.
+2024-01-05 20:30:23,789 - INFO - Saving to local storage.
+2024-01-05 20:30:25,039 - INFO - Saving to local storage.
+2024-01-05 20:30:26,353 - INFO - Saving to local storage.
+2024-01-05 20:30:27,634 - INFO - Saving to local storage.
+2024-01-05 20:30:28,900 - INFO - Saving to local storage.
+2024-01-05 20:30:30,166 - INFO - Saving to local storage.
+2024-01-05 20:30:31,478 - INFO - Saving to local storage.
+2024-01-05 20:30:32,744 - INFO - Saving to local storage.
+2024-01-05 20:30:33,978 - INFO - Saving to local storage.
+2024-01-05 20:30:35,259 - INFO - Saving to local storage.
+2024-01-05 20:30:36,530 - INFO - Saving to local storage.
+2024-01-05 20:30:37,780 - INFO - Saving to local storage.
+2024-01-05 20:30:39,045 - INFO - Saving to local storage.
+2024-01-05 20:30:40,264 - INFO - Saving to local storage.
+2024-01-05 20:30:41,503 - INFO - Saving to local storage.
+2024-01-05 20:30:42,769 - INFO - Saving to local storage.
+2024-01-05 20:30:44,034 - INFO - Saving to local storage.
+2024-01-05 20:30:45,269 - INFO - Saving to local storage.
+2024-01-05 20:30:46,536 - INFO - Saving to local storage.
+2024-01-05 20:30:47,770 - INFO - Saving to local storage.
+2024-01-05 20:30:49,098 - INFO - Saving to local storage.
+2024-01-05 20:30:50,453 - INFO - Saving to local storage.
+2024-01-05 20:30:51,722 - INFO - Saving to local storage.
+2024-01-05 20:30:52,993 - INFO - Saving to local storage.
+2024-01-05 20:30:54,235 - INFO - Saving to local storage.
+2024-01-05 20:30:55,559 - INFO - Saving to local storage.
+2024-01-05 20:30:56,797 - INFO - Saving to local storage.
+2024-01-05 20:30:58,079 - INFO - Saving to local storage.
+2024-01-05 20:30:59,298 - INFO - Saving to local storage.
+2024-01-05 20:31:00,548 - INFO - Saving to local storage.
+2024-01-05 20:31:01,826 - INFO - Saving to local storage.
+2024-01-05 20:31:03,087 - INFO - Saving to local storage.
+2024-01-05 20:31:04,337 - INFO - Saving to local storage.
+2024-01-05 20:31:05,587 - INFO - Saving to local storage.
+2024-01-05 20:31:06,844 - INFO - Saving to local storage.
+2024-01-05 20:31:08,296 - INFO - Saving to local storage.
+2024-01-05 20:31:09,546 - INFO - Saving to local storage.
+2024-01-05 20:31:10,843 - INFO - Saving to local storage.
+2024-01-05 20:31:12,076 - INFO - Saving to local storage.
+2024-01-05 20:31:13,343 - INFO - Saving to local storage.
+2024-01-05 20:31:14,578 - INFO - Saving to local storage.
+2024-01-05 20:31:15,828 - INFO - Saving to local storage.
+2024-01-05 20:31:17,065 - INFO - Saving to local storage.
+2024-01-05 20:31:18,316 - INFO - Saving to local storage.
+2024-01-05 20:31:19,597 - INFO - Saving to local storage.
+2024-01-05 20:31:20,863 - INFO - Saving to local storage.
+2024-01-05 20:31:22,113 - INFO - Saving to local storage.
+2024-01-05 20:31:23,385 - INFO - Saving to local storage.
+2024-01-05 20:31:24,650 - INFO - Saving to local storage.
+2024-01-05 20:31:25,869 - INFO - Saving to local storage.
+2024-01-05 20:31:27,135 - INFO - Saving to local storage.
+2024-01-05 20:31:28,372 - INFO - Saving to local storage.
+2024-01-05 20:31:29,622 - INFO - Saving to local storage.
+2024-01-05 20:31:30,904 - INFO - Saving to local storage.
+2024-01-05 20:31:32,169 - INFO - Saving to local storage.
+2024-01-05 20:31:33,439 - INFO - Saving to local storage.
+2024-01-05 20:31:34,736 - INFO - Saving to local storage.
+2024-01-05 20:31:35,971 - INFO - Saving to local storage.
+2024-01-05 20:31:37,221 - INFO - Saving to local storage.
+2024-01-05 20:31:38,489 - INFO - Saving to local storage.
+2024-01-05 20:31:39,770 - INFO - Saving to local storage.
+2024-01-05 20:31:41,020 - INFO - Saving to local storage.
+2024-01-05 20:31:42,286 - INFO - Saving to local storage.
+2024-01-05 20:31:43,572 - INFO - Saving to local storage.
+2024-01-05 20:31:44,807 - INFO - Saving to local storage.
+2024-01-05 20:31:46,088 - INFO - Saving to local storage.
+2024-01-05 20:31:47,354 - INFO - Saving to local storage.
+2024-01-05 20:31:48,605 - INFO - Saving to local storage.
+2024-01-05 20:31:49,886 - INFO - Saving to local storage.
+2024-01-05 20:31:51,136 - INFO - Saving to local storage.
+2024-01-05 20:31:52,418 - INFO - Saving to local storage.
+2024-01-05 20:31:53,672 - INFO - Saving to local storage.
+2024-01-05 20:31:54,937 - INFO - Saving to local storage.
+2024-01-05 20:31:56,203 - INFO - Saving to local storage.
+2024-01-05 20:31:57,453 - INFO - Saving to local storage.
+2024-01-05 20:31:58,722 - INFO - Saving to local storage.
+2024-01-05 20:31:59,972 - INFO - Saving to local storage.
+2024-01-05 20:32:01,237 - INFO - Saving to local storage.
+2024-01-05 20:32:02,472 - INFO - Saving to local storage.
+2024-01-05 20:32:03,702 - INFO - Saving to local storage.
+2024-01-05 20:32:04,983 - INFO - Saving to local storage.
+2024-01-05 20:32:06,265 - INFO - Saving to local storage.
+2024-01-05 20:32:07,515 - INFO - Saving to local storage.
+2024-01-05 20:32:09,205 - INFO - Saving to local storage.
+2024-01-05 20:32:09,220 - INFO - downloading file for year 2024
+2024-01-05 20:32:15,612 - INFO - Downloading 100 files.
+2024-01-05 20:32:16,862 - INFO - Saving to local storage.
+2024-01-05 20:32:18,128 - INFO - Saving to local storage.
+2024-01-05 20:32:19,368 - INFO - Saving to local storage.
+2024-01-05 20:32:20,665 - INFO - Saving to local storage.
+2024-01-05 20:32:21,915 - INFO - Saving to local storage.
+2024-01-05 20:32:23,181 - INFO - Saving to local storage.
+2024-01-05 20:32:24,450 - INFO - Saving to local storage.
+2024-01-05 20:32:25,700 - INFO - Saving to local storage.
+2024-01-05 20:32:26,981 - INFO - Saving to local storage.
+2024-01-05 20:32:28,231 - INFO - Saving to local storage.
+2024-01-05 20:32:29,497 - INFO - Saving to local storage.
+2024-01-05 20:32:31,716 - INFO - Saving to local storage.
+2024-01-05 20:32:32,951 - INFO - Saving to local storage.
+2024-01-05 20:32:34,173 - INFO - Saving to local storage.
+2024-01-05 20:32:35,440 - INFO - Saving to local storage.
+2024-01-05 20:32:36,659 - INFO - Saving to local storage.
+2024-01-05 20:32:37,925 - INFO - Saving to local storage.
+2024-01-05 20:32:39,175 - INFO - Saving to local storage.
+2024-01-05 20:32:40,396 - INFO - Saving to local storage.
+2024-01-05 20:32:41,693 - INFO - Saving to local storage.
+2024-01-05 20:32:42,943 - INFO - Saving to local storage.
+2024-01-05 20:32:44,209 - INFO - Saving to local storage.
+2024-01-05 20:32:45,463 - INFO - Saving to local storage.
+2024-01-05 20:32:46,728 - INFO - Saving to local storage.
+2024-01-05 20:32:47,978 - INFO - Saving to local storage.
+2024-01-05 20:32:49,228 - INFO - Saving to local storage.
+2024-01-05 20:32:50,453 - INFO - Saving to local storage.
+2024-01-05 20:32:51,703 - INFO - Saving to local storage.
+2024-01-05 20:32:52,985 - INFO - Saving to local storage.
+2024-01-05 20:32:54,219 - INFO - Saving to local storage.
+2024-01-05 20:32:55,457 - INFO - Saving to local storage.
+2024-01-05 20:32:56,707 - INFO - Saving to local storage.
+2024-01-05 20:32:57,988 - INFO - Saving to local storage.
+2024-01-05 20:32:59,238 - INFO - Saving to local storage.
+2024-01-05 20:33:00,504 - INFO - Saving to local storage.
+2024-01-05 20:33:01,770 - INFO - Saving to local storage.
+2024-01-05 20:33:03,004 - INFO - Saving to local storage.
+2024-01-05 20:33:04,254 - INFO - Saving to local storage.
+2024-01-05 20:33:05,505 - INFO - Saving to local storage.
+2024-01-05 20:33:06,740 - INFO - Saving to local storage.
+2024-01-05 20:33:08,021 - INFO - Saving to local storage.
+2024-01-05 20:33:09,240 - INFO - Saving to local storage.
+2024-01-05 20:33:10,491 - INFO - Saving to local storage.
+2024-01-05 20:33:11,870 - INFO - Saving to local storage.
+2024-01-05 20:33:13,120 - INFO - Saving to local storage.
+2024-01-05 20:33:14,402 - INFO - Saving to local storage.
+2024-01-05 20:33:15,683 - INFO - Saving to local storage.
+2024-01-05 20:33:16,951 - INFO - Saving to local storage.
+2024-01-05 20:33:18,217 - INFO - Saving to local storage.
+2024-01-05 20:33:19,467 - INFO - Saving to local storage.
+2024-01-05 20:33:20,734 - INFO - Saving to local storage.
+2024-01-05 20:33:22,064 - INFO - Saving to local storage.
+2024-01-05 20:33:23,298 - INFO - Saving to local storage.
+2024-01-05 20:33:24,532 - INFO - Saving to local storage.
+2024-01-05 20:33:25,800 - INFO - Saving to local storage.
+2024-01-05 20:33:27,049 - INFO - Saving to local storage.
+2024-01-05 20:33:28,314 - INFO - Saving to local storage.
+2024-01-05 20:33:29,533 - INFO - Saving to local storage.
+2024-01-05 20:33:30,810 - INFO - Saving to local storage.
+2024-01-05 20:33:32,037 - INFO - Saving to local storage.
+2024-01-05 20:33:33,318 - INFO - Saving to local storage.
+2024-01-05 20:33:34,570 - INFO - Saving to local storage.
+2024-01-05 20:33:35,818 - INFO - Saving to local storage.
+2024-01-05 20:33:37,070 - INFO - Saving to local storage.
+2024-01-05 20:33:38,320 - INFO - Saving to local storage.
+2024-01-05 20:33:39,586 - INFO - Saving to local storage.
+2024-01-05 20:33:40,852 - INFO - Saving to local storage.
+2024-01-05 20:33:42,073 - INFO - Saving to local storage.
+2024-01-05 20:33:43,323 - INFO - Saving to local storage.
+2024-01-05 20:33:44,589 - INFO - Saving to local storage.
+2024-01-05 20:33:45,855 - INFO - Saving to local storage.
+2024-01-05 20:33:47,109 - INFO - Saving to local storage.
+2024-01-05 20:33:48,344 - INFO - Saving to local storage.
+2024-01-05 20:33:49,609 - INFO - Saving to local storage.
+2024-01-05 20:33:50,875 - INFO - Saving to local storage.
+2024-01-05 20:33:52,114 - INFO - Saving to local storage.
+2024-01-05 20:33:53,411 - INFO - Saving to local storage.
+2024-01-05 20:33:54,645 - INFO - Saving to local storage.
+2024-01-05 20:33:55,895 - INFO - Saving to local storage.
+2024-01-05 20:33:57,154 - INFO - Saving to local storage.
+2024-01-05 20:33:58,435 - INFO - Saving to local storage.
+2024-01-05 20:33:59,654 - INFO - Saving to local storage.
+2024-01-05 20:34:00,919 - INFO - Saving to local storage.
+2024-01-05 20:34:02,135 - INFO - Saving to local storage.
+2024-01-05 20:34:03,362 - INFO - Saving to local storage.
+2024-01-05 20:34:04,612 - INFO - Saving to local storage.
+2024-01-05 20:34:05,862 - INFO - Saving to local storage.
+2024-01-05 20:34:07,147 - INFO - Saving to local storage.
+2024-01-05 20:34:08,399 - INFO - Saving to local storage.
+2024-01-05 20:34:09,665 - INFO - Saving to local storage.
+2024-01-05 20:34:10,868 - INFO - Saving to local storage.
+2024-01-05 20:34:12,124 - INFO - Saving to local storage.
+2024-01-05 20:34:13,340 - INFO - Saving to local storage.
+2024-01-05 20:34:14,575 - INFO - Saving to local storage.
+2024-01-05 20:34:15,887 - INFO - Saving to local storage.
+2024-01-05 20:34:17,122 - INFO - Saving to local storage.
+2024-01-05 20:34:18,407 - INFO - Saving to local storage.
+2024-01-05 20:34:19,673 - INFO - Saving to local storage.
+2024-01-05 20:34:20,892 - INFO - Saving to local storage.
+2024-01-05 20:34:22,142 - INFO - Saving to local storage.
+2024-01-05 20:34:22,142 - INFO - extract_data pipeline finshed.
+2024-01-05 20:34:22,142 - INFO - ['C:\\Users\\sg1386-dsk01-user1\\Desktop\\Git Pipeline\\Weather_data_pipeline\\data/raw/2023', 'C:\\Users\\sg1386-dsk01-user1\\Desktop\\Git Pipeline\\Weather_data_pipeline\\data/raw/2024']
+2024-01-05 20:34:22,142 - INFO - Data quality check started.
+2024-01-05 20:34:28,414 - INFO - add_features started.
+2024-01-05 20:34:28,461 - INFO - add_visibilityCategory started.
+2024-01-05 20:34:28,461 - INFO - add_weatherType started.
+2024-01-05 20:34:28,649 - INFO - Merging satrted.
+2024-01-05 20:34:28,680 - INFO - Merging satrted.
+2024-01-05 20:35:22,913 - INFO - File C:\Users\sg1386-dsk01-user1\Desktop\Git Pipeline\Weather_data_pipeline\data/processed/WEATHER_PROCESSED.csv saved successfully.
+2024-01-05 20:35:22,913 - INFO - Pipeline ran successfully.
